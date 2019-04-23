@@ -1,1 +1,1 @@
-DataStructures
+Data structure implementations and algorithms
