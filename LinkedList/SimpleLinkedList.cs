@@ -65,12 +65,11 @@ namespace SimpleLinkedList
             }
         }
 
-        public bool InsertAtPosition(T data, int position)
+        public void InsertAtPosition(T data, int position)
         {
             if(Head == null && position != 1)
             {
                 Console.WriteLine("list empty position not valid");
-                return false;
             }
 
             var newNode = new Node<T>(data);
@@ -80,7 +79,6 @@ namespace SimpleLinkedList
                 newNode.Next = Head;
                 Head = newNode;
                 Console.WriteLine("node inserted");
-                return true;
             }
             var curr = Head;
             var prev = Head;
@@ -96,12 +94,10 @@ namespace SimpleLinkedList
                 prev.Next = newNode;
                 newNode.Next = curr;
                 Console.WriteLine("node inserted");
-                return true;
             }
             else
             {
                 Console.WriteLine("position outside of current node count");
-                return false;
             }
         }
 
@@ -137,19 +133,17 @@ namespace SimpleLinkedList
             }
         }
 
-        public bool DeleteAtPosition(int position)
+        public void DeleteAtPosition(int position)
         {
             if (Head == null)
             {
                 Console.WriteLine("List is empty");
-                return false;
             }
             if (position == 1)
             {
                 var temp = Head.Next;
                 Head.Next = null;
                 Head = temp;
-                return true;
 
             }
             var curr = Head;
@@ -166,13 +160,49 @@ namespace SimpleLinkedList
                 prev.Next = curr.Next;
                 curr.Next = null;
                 Console.WriteLine("Node deleted");
-                return true;
             }
             else
             {
                 Console.WriteLine("No element at positiong");
-                return false;
             }
+        }
+
+        public void DeleteNthFromEnd(int position)
+        {
+            if(Head == null)
+            {
+                Console.WriteLine("List is empty");
+                //return null;
+            }
+
+            var fast = Head;
+            var slow = Head;
+
+            for(int i = 0; i < position; i++)
+            {
+                if(fast == null)
+                {
+                    Console.WriteLine("position greater than list length");
+                    return;
+                }
+                fast = fast.Next;
+            }
+
+            if(fast == null)
+            {
+                var temp = Head.Next;
+                Head.Next = null;
+                Head = temp;
+                return;
+            }
+
+            while(fast.Next != null)
+            {
+                fast = fast.Next;
+                slow = slow.Next;
+
+            }
+            slow.Next = slow.Next.Next;
         }
 
         //Caller has to handle if null is returned 
