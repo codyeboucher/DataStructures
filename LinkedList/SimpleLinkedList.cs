@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SimpleLinkedList
 {
-    class SimpleLinkedList<T>
+    class SimpleLinkedList<T> where T : struct
     {
         public Node<T> Head { get; set; }
 
@@ -247,6 +247,40 @@ namespace SimpleLinkedList
                 count++;
             }
             return count % 2 == 0;
+        }
+
+        public bool IsPalindrome()
+        {
+            if(Head == null || Head.Next == null)
+            {
+                return true;
+            }
+
+            var prev = new Node<T>(Head.Data);
+            var curr = Head;
+
+            while(curr.Next != null)
+            {
+                var temp = new Node<T>(curr.Next.Data);
+                temp.Next = prev;
+                prev = temp;
+                curr = curr.Next;
+            }
+
+            var reverse = prev;
+            var orig = Head;
+
+            while(orig != null)
+            {
+                Console.WriteLine("reverse" + reverse.Data);
+                if(!EqualityComparer<T>.Default.Equals(orig.Data, reverse.Data))
+                {
+                    return false;
+                }
+                reverse = reverse.Next;
+                orig = orig.Next;
+            }
+            return true;
         }
 
         public void Reverse()
